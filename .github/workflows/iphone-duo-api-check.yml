@@ -36,6 +36,11 @@ jobs:
           cat > /tmp/probe.swift << 'EOF'
           import UIKit
 
+          // @available keeps this a pure existence check: on an SDK that has the
+          // symbols it type-checks cleanly; on one that doesn't it still fails with
+          // "has no member". Without it, a 27.1+ SDK fails on *availability* alone
+          // (target is ios17.0), which run 37646176164 misread as the symbols missing.
+          @available(iOS 27.1, *)
           func probeReservedRegions(_ view: UIView) -> [[String: Any]] {
             var features: [[String: Any]] = []
             for region in view.reservedRegions(kind: .division) {
