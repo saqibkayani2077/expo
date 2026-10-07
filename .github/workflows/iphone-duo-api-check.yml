@@ -10,7 +10,9 @@ on:
 
 jobs:
   check:
-    runs-on: macos-26
+    # xcode-27 is GitHub's preview image (actions/runner-images#14404); it carries the
+    # Xcode 27 line, which macos-26 does not. 27.1 is still preferred by the step below.
+    runs-on: xcode-27
     steps:
       - name: Select Xcode (prefer 27.1, else latest installed)
         id: xcode
